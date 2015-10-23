@@ -63,9 +63,7 @@
         <sonar.sources>${project.basedir}/src/main/</sonar.sources>
         <sonar.surefire.reportsPath>${project.testresult.directory}/surefire-reports</sonar.surefire.reportsPath>
         <sonar.tests>${project.basedir}/src/test/</sonar.tests>
-
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>io.dropwizard.metrics</groupId>
@@ -380,6 +378,7 @@
                 </excludes>
             </resource>
         </resources>
+        <pluginManagement>
         <plugins>
             <plugin>
                 <groupId>com.google.code.sortpom</groupId>
@@ -580,6 +579,7 @@
                 </configuration>
             </plugin>
         </plugins>
+    </pluginManagement>
     </build>
 
     <profiles>

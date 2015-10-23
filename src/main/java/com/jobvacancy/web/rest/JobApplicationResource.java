@@ -45,10 +45,15 @@ public class JobApplicationResource {
     @Timed
     public ResponseEntity<JobOffer> createJobApplication(@Valid @RequestBody JobApplicationDTO jobApplication) throws URISyntaxException {
         log.debug("REST request to save JobApplication : {}", jobApplication);
-        JobOffer jobOffer = jobOfferRepository.findOne(jobApplication.getOfferId());
-        this.mailService.sendApplication(jobApplication.getEmail(), jobOffer);
-
-        return ResponseEntity.accepted()
-            .headers(HeaderUtil.createAlert("Application created and sent offer's owner", "")).body(null);
+        
+        //if (mail valido){
+        	JobOffer jobOffer = jobOfferRepository.findOne(jobApplication.getOfferId());
+        	this.mailService.sendApplication(jobApplication.getEmail(), jobOffer);
+        	 return ResponseEntity.accepted()
+        	            .headers(HeaderUtil.createAlert("Application created and sent offer's owner", "")).body(null);
+        /*}else{
+        	 return ResponseEntity.accepted()
+     	            .headers(HeaderUtil.createAlert("Invalid Mail", "")).body(null);
+        }*/
     }
 }
