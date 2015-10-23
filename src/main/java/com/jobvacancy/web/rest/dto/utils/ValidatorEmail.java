@@ -3,7 +3,7 @@ package com.jobvacancy.web.rest.dto.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ValidatorMail {
+public class ValidatorEmail {
 
 	 private final String patternMail = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 	            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";

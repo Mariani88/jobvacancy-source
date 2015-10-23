@@ -3,10 +3,10 @@ package com.jobvacancy.web.rest.dto.utils;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ValidatorMailTest {
+public class ValidatorEmailTest {
 	
 	private String[] emails;
-	private ValidatorMail validatorMail = new ValidatorMail (); 
+	private ValidatorEmail validatorMail = new ValidatorEmail (); 
 	
     @Test
     public void validEmailTest() {
