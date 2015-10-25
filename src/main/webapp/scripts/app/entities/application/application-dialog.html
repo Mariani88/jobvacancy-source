@@ -28,13 +28,18 @@
         </div>
         <div class="form-group">
             <label for="field_email">Your Email</label>
-            <input type="text" class="form-control" name="location" id="field_email"
-                    ng-model="jobApplication.email"
+            <input type="email" class="form-control" name="email" id="field_email" 
+		    ng-model="jobApplication.email"
+		    ng-pattern="/^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$/"
                     required>
             <div ng-show="editForm.email.$invalid">
                 <p class="help-block"
                    ng-show="editForm.email.$error.required">
                     This field is required.
+                </p>
+		<p class="help-block"
+                    ng-show="editForm.email.$error.email">
+                    Invalid mail
                 </p>
             </div>
         </div>

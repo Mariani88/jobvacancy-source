@@ -57,7 +57,8 @@ public class JobApplicationResource {
         }else{
         	String bodyAlert = "INVALID EMAIL:" + jobApplication.getEmail()
 			+ ", nothing was saved!!!. please check your email and try again";
-			return ResponseEntity.accepted().headers(HeaderUtil.createAlert(bodyAlert, "")).body(null);
+        	
+			return ResponseEntity.badRequest().headers(HeaderUtil.createAlert(bodyAlert, "")).body(null);
 		}
     }
 }

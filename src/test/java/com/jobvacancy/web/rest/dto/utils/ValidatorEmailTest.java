@@ -39,12 +39,9 @@ public class ValidatorEmailTest {
                 "101@example.com", "test-101@example-test.com", "matias@live.com.ar" };
 	}
 
-    private void loadInvalidsEmailsForTest() {
-    	  this.emails = new String[] { "example", "example@.com.com",
-    	            "exampel101@test.a", "exampel101@.com", ".example@test.com",
-    	            "example**()@test.com", "example@%*.com",
-    	            "example..101@test.com", "example.@test.com",
-    	            "test@example_101.com", "example@test@test.com",
-    	            "example@test.com.a5" };
-    }
+	private void loadInvalidsEmailsForTest() {
+		this.emails = new String[] { "example", "example@.com.com", "exampel101@.com", "example**()@test.com",
+				"example@%*.com", "test@example_101.com", "example@test@test.com", "hola@hola", "exampel101@test.a",
+				"example@test.com.a5", ".example@test.com", "example..101@test.com", "example.@test.com" };
+	}
 }
