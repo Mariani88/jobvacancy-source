@@ -378,7 +378,6 @@
                 </excludes>
             </resource>
         </resources>
-        <pluginManagement>
         <plugins>
             <plugin>
                 <groupId>com.google.code.sortpom</groupId>
@@ -579,9 +578,7 @@
                 </configuration>
             </plugin>
         </plugins>
-    </pluginManagement>
     </build>
-
     <profiles>
         <profile>
             <id>dev</id>
