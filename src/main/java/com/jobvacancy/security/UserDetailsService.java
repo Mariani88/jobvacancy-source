@@ -1,6 +1,5 @@
 package com.jobvacancy.security;
 
-import com.jobvacancy.domain.Authority;
 import com.jobvacancy.domain.User;
 import com.jobvacancy.repository.UserRepository;
 import org.slf4j.Logger;
@@ -11,13 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.Collections;
 import java.util.List;
 
 /**

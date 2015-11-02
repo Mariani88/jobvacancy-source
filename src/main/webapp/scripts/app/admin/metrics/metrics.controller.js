@@ -15,6 +15,7 @@ angular.module('jobvacancyApp')
                 $scope.updatingMetrics = false;
             });
         };
+	
 
         $scope.$watch('metrics', function (newValue) {
             $scope.servicesStats = {};

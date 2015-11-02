@@ -4,7 +4,12 @@ import javax.servlet.ServletException;
 
 public class GzipResponseHeadersNotModifiableException extends ServletException {
 
-    public GzipResponseHeadersNotModifiableException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8277145691292232815L;
+
+	public GzipResponseHeadersNotModifiableException(String message) {
         super(message);
     }
 }
