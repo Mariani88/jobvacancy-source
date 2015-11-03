@@ -8,6 +8,7 @@ import com.jobvacancy.repository.JobOfferRepository;
 
 import com.jobvacancy.repository.UserRepository;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -257,4 +258,24 @@ public class JobOfferResourceTest {
         List<JobOffer> jobOffers = jobOfferRepository.findAll();
         assertThat(jobOffers).hasSize(databaseSizeBeforeDelete - 1);
     }
+    
+    
+    @Test
+    @Transactional
+    public void ifCreateJobOfferThenCountEqualsOne() throws Exception {
+     
+        // Create the JobOffer
+        restJobOfferMockMvc.perform(post("/api/jobOffers")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(jobOffer)))
+                .andExpect(status().isCreated());
+
+        // Validate the JobOffer in the database
+        Assert.assertEquals(1, this.jobOfferRepository.count() );
+    }
+    
+    
+    
+    
+    
 }

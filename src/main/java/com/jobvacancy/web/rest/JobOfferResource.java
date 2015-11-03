@@ -228,4 +228,20 @@ public class JobOfferResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+    
+    /**
+     * GET  /jobOffers -> get total jobOffers.
+     */
+    @RequestMapping(value = "/totalOffers",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public long gettotalOffers(Pageable pageable)
+            throws URISyntaxException {
+        
+    	return this.jobOfferRepository.count();
+    }
+    
+    
+    
 }
