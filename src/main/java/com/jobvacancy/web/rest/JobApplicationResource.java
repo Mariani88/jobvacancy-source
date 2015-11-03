@@ -5,7 +5,7 @@ import com.jobvacancy.domain.JobOffer;
 import com.jobvacancy.repository.JobOfferRepository;
 import com.jobvacancy.service.MailService;
 import com.jobvacancy.web.rest.dto.JobApplicationDTO;
-import com.jobvacancy.web.rest.dto.utils.ValidatorEmail;
+import com.jobvacancy.web.rest.dto.utils.ValidatorJobApplicationData;
 import com.jobvacancy.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,36 +23,41 @@ import java.net.URISyntaxException;
 @RequestMapping("/api")
 public class JobApplicationResource {
 
-    private final Logger log = LoggerFactory.getLogger(JobOfferResource.class);
-    private ValidatorEmail validatorEmail = new ValidatorEmail ();
-    
-    @Inject
-    private JobOfferRepository jobOfferRepository;
+	private final Logger log = LoggerFactory.getLogger(JobOfferResource.class);
+	private ValidatorJobApplicationData validator = new ValidatorJobApplicationData();
 
-    @Inject
-    private MailService mailService;
+	@Inject
+	private JobOfferRepository jobOfferRepository;
 
-    /**
-     * POST  /Application -> Create a new jobOffer.
-     */
-    @RequestMapping(value = "/Application",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<JobOffer> createJobApplication(@Valid @RequestBody JobApplicationDTO jobApplication) throws URISyntaxException {
-        log.debug("REST request to save JobApplication : {}", jobApplication);
-        
-        if (this.validatorEmail.validateEmail(jobApplication.getEmail())){
-        	JobOffer jobOffer = jobOfferRepository.findOne(jobApplication.getOfferId());
-        	this.mailService.sendApplication(jobApplication.getEmail(), jobOffer);
-        	
-        	return ResponseEntity.accepted()
-        	            .headers(HeaderUtil.createAlert("Application created and sent offer's owner", "")).body(null);
-        }else{
-        	String bodyAlert = "INVALID EMAIL:" + jobApplication.getEmail()
-			+ ", nothing was saved!!!. please check your email and try again";
-        	
+	@Inject
+	private MailService mailService;
+
+	/**
+	 * POST /Application -> Create a new jobOffer.
+	 */
+	@RequestMapping(value = "/Application", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@Timed
+	public ResponseEntity<JobOffer> createJobApplication(@Valid @RequestBody JobApplicationDTO jobApplication)
+			throws URISyntaxException {
+		log.debug("REST request to save JobApplication : {}", jobApplication);
+
+		if (this.validator.validate(jobApplication.getEmail(), "mail")) {
+			if (this.validator.validate(jobApplication.getLink(), "link")) {
+				JobOffer jobOffer = jobOfferRepository.findOne(jobApplication.getOfferId());
+				this.mailService.sendApplication(jobApplication.getEmail(), jobOffer, jobApplication.getLink());
+
+				return ResponseEntity.accepted()
+						.headers(HeaderUtil.createAlert("Application created and sent offer's owner", "")).body(null);
+			}
+		} else {
+			String bodyAlert = "INVALID EMAIL:" + jobApplication.getEmail()
+					+ ", nothing was saved!!!. please check your email and try again";
+
 			return ResponseEntity.badRequest().headers(HeaderUtil.createAlert(bodyAlert, "")).body(null);
 		}
-    }
+		String bodyAlert = "INVALID LINK:" + jobApplication.getLink()
+				+ ", nothing was saved!!!. please check your link and try again";
+
+		return ResponseEntity.badRequest().headers(HeaderUtil.createAlert(bodyAlert, "")).body(null);
+	}
 }

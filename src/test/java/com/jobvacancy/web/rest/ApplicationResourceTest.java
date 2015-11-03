@@ -45,11 +45,12 @@ public class ApplicationResourceTest {
 
     private static final String APPLICANT_FULLNAME = "THE APPLICANT";
     private static final String APPLICANT_EMAIL = "APPLICANT@TEST.COM";
+    private static final String OFFER_LINK = "https://link.com";
     private MockMvc restMockMvc;
 
     private static final long OFFER_ID = 1;
     private static final String OFFER_TITLE = "SAMPLE_TEXT";
-
+    
     @Mock
     private MailService mailService;
 
@@ -87,17 +88,18 @@ public class ApplicationResourceTest {
         JobApplicationDTO dto = new JobApplicationDTO();
         dto.setEmail(APPLICANT_EMAIL);
         dto.setFullname(APPLICANT_FULLNAME);
+        dto.setLink(OFFER_LINK);
         dto.setOfferId(OFFER_ID);
 
         //when(mailService.sendEmail(to, subject,content,false, false)).thenReturn(Mockito.v);
-        doNothing().when(mailService).sendApplication(APPLICANT_EMAIL, offer);
+        doNothing().when(mailService).sendApplication(APPLICANT_EMAIL, offer, OFFER_LINK);
 
         restMockMvc.perform(post("/api/Application")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(dto)))
                 .andExpect(status().isAccepted());
-
-        Mockito.verify(mailService).sendApplication(APPLICANT_EMAIL, offer);
+        
+        Mockito.verify(mailService).sendApplication(APPLICANT_EMAIL, offer, OFFER_LINK);
         //StrictAssertions.assertThat(testJobOffer.getLocation()).isEqualTo(DEFAULT_LOCATION);
         //StrictAssertions.assertThat(testJobOffer.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
