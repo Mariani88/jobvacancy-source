@@ -45,7 +45,9 @@ public class ApplicationResourceTest {
 
     private static final String APPLICANT_FULLNAME = "THE APPLICANT";
     private static final String APPLICANT_EMAIL = "APPLICANT@TEST.COM";
-    private static final String OFFER_LINK = "https://link.com";
+    private static final String APPLICANT_EMAIL_INVALID = "APPLICANT@TEST";
+    private static final String APPLICANT_LINK = "https://link.com";
+    private static final String APPLICANT_LINK_INVALID = "hps://link.com";
     private MockMvc restMockMvc;
 
     private static final long OFFER_ID = 1;
@@ -88,20 +90,54 @@ public class ApplicationResourceTest {
         JobApplicationDTO dto = new JobApplicationDTO();
         dto.setEmail(APPLICANT_EMAIL);
         dto.setFullname(APPLICANT_FULLNAME);
-        dto.setLink(OFFER_LINK);
+        dto.setLink(APPLICANT_LINK);
         dto.setOfferId(OFFER_ID);
 
         //when(mailService.sendEmail(to, subject,content,false, false)).thenReturn(Mockito.v);
-        doNothing().when(mailService).sendApplication(APPLICANT_EMAIL, offer, OFFER_LINK);
+        doNothing().when(mailService).sendApplication(APPLICANT_EMAIL, offer, APPLICANT_LINK);
 
         restMockMvc.perform(post("/api/Application")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(dto)))
                 .andExpect(status().isAccepted());
         
-        Mockito.verify(mailService).sendApplication(APPLICANT_EMAIL, offer, OFFER_LINK);
+        Mockito.verify(mailService).sendApplication(APPLICANT_EMAIL, offer, APPLICANT_LINK);
         //StrictAssertions.assertThat(testJobOffer.getLocation()).isEqualTo(DEFAULT_LOCATION);
         //StrictAssertions.assertThat(testJobOffer.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+    }
+    
+    @Test
+    @Transactional
+    public void creoUnaJobApplicationConMailInvalid() throws Exception {
+        JobApplicationDTO dto = new JobApplicationDTO();
+        dto.setEmail(APPLICANT_EMAIL_INVALID);
+        dto.setFullname(APPLICANT_FULLNAME);
+        dto.setLink(APPLICANT_LINK);
+        dto.setOfferId(OFFER_ID);
+
+        doNothing().when(mailService).sendApplication(APPLICANT_EMAIL_INVALID, offer, APPLICANT_LINK);
+
+        restMockMvc.perform(post("/api/Application")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(dto)))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Transactional
+    public void creoUnaJobApplicationConLinkInvalid() throws Exception {
+        JobApplicationDTO dto = new JobApplicationDTO();
+        dto.setEmail(APPLICANT_EMAIL);
+        dto.setFullname(APPLICANT_FULLNAME);
+        dto.setLink(APPLICANT_LINK_INVALID);
+        dto.setOfferId(OFFER_ID);
+
+        doNothing().when(mailService).sendApplication(APPLICANT_EMAIL, offer, APPLICANT_LINK_INVALID);
+
+        restMockMvc.perform(post("/api/Application")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(dto)))
+            .andExpect(status().isBadRequest());
     }
 
 }
