@@ -50,7 +50,8 @@ public class JobOfferResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<JobOffer> createJobOffer(@Valid @RequestBody JobOffer jobOffer) throws URISyntaxException {
-        log.debug("REST request to save JobOffer : {}", jobOffer);
+        jobOffer.setPostulations( new Long (0) );
+    	log.debug("REST request to save JobOffer : {}", jobOffer);
         if (jobOffer.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new jobOffer cannot already have an ID").body(null);
         }

@@ -2,6 +2,8 @@ package com.jobvacancy.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Generated;
+
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -34,10 +36,21 @@ public class JobOffer implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "postulations")
+    private Long postulations;
+    
     @ManyToOne
     private User owner;
+    
+    public Long getPostulations() {
+		return postulations;
+	}
 
-    public Long getId() {
+	public void setPostulations(Long postulations) {
+		this.postulations = postulations;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -104,7 +117,7 @@ public class JobOffer implements Serializable {
                 "id=" + id +
                 ", title='" + title + "'" +
                 ", location='" + location + "'" +
-                ", description='" + description + "'" +
+                ", description='" + description + "'" +", postilations='"+postulations + "'" + 
                 '}';
     }
 }
