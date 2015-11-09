@@ -28,9 +28,7 @@
             <column name="location" type="varchar(255)"/>
             <column name="description" type="varchar(255)"/>
             <column name="owner_id" type="bigint"/>
-            <column name="postulations" type="bigint" autoIncrement="${autoIncrement}">
-            	<constraints nullable="false" />
-            </column>
+            <column name="postulations" type="bigint"/>  
         </createTable>
         
         <addForeignKeyConstraint baseColumnNames="owner_id"
