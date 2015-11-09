@@ -7,6 +7,7 @@ import com.jobvacancy.repository.JobOfferRepository;
 import com.jobvacancy.repository.UserRepository;
 import com.jobvacancy.service.MailService;
 import com.jobvacancy.web.rest.dto.JobApplicationDTO;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -14,6 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -26,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
+import java.io.IOException;
 import java.util.Optional;
 
 
@@ -75,6 +78,7 @@ public class ApplicationResourceTest {
         offer.setTitle(OFFER_TITLE);
         offer.setId(OFFER_ID);
         offer.setOwner(user.get());
+        offer.setPostulations(new Long (0));
         when(jobOfferRepository.findOne(OFFER_ID)).thenReturn(offer);
         JobApplicationResource jobApplicationResource = new JobApplicationResource();
         ReflectionTestUtils.setField(jobApplicationResource, "jobOfferRepository", jobOfferRepository);
@@ -92,7 +96,7 @@ public class ApplicationResourceTest {
         dto.setFullname(APPLICANT_FULLNAME);
         dto.setLink(APPLICANT_LINK);
         dto.setOfferId(OFFER_ID);
-
+        
         //when(mailService.sendEmail(to, subject,content,false, false)).thenReturn(Mockito.v);
         doNothing().when(mailService).sendApplication(APPLICANT_EMAIL, offer, APPLICANT_LINK);
 
@@ -106,7 +110,30 @@ public class ApplicationResourceTest {
         //StrictAssertions.assertThat(testJobOffer.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
     
+    
     @Test
+    @Transactional
+    public void createJobApplicationMustIncrementPostulationsToOffer() throws Exception {
+        JobApplicationDTO dto = new JobApplicationDTO();
+        dto.setEmail(APPLICANT_EMAIL);
+        dto.setFullname(APPLICANT_FULLNAME);
+        dto.setLink(APPLICANT_LINK);
+        dto.setOfferId(OFFER_ID);
+       
+        Long postulations = offer.getPostulations();
+      
+        restMockMvc.perform(post("/api/Application")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(dto)))
+                .andExpect(status().isAccepted());
+        
+        JobOffer jobOffer = jobOfferRepository.findOne(offer.getId());
+        
+        Assert.assertEquals( new Long (postulations + 1), jobOffer.getPostulations());
+    }
+    
+
+	@Test
     @Transactional
     public void creoUnaJobApplicationConMailInvalid() throws Exception {
         JobApplicationDTO dto = new JobApplicationDTO();
