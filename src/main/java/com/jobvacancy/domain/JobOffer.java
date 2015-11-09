@@ -2,7 +2,6 @@ package com.jobvacancy.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Generated;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
