@@ -9,25 +9,16 @@ import com.jobvacancy.web.rest.dto.utils.ValidatorJobApplicationData;
 import com.jobvacancy.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import javax.inject.Inject;
 import javax.validation.Valid;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.io.IOException;
-import java.net.URISyntaxException;
+
 
 @RestController
 @RequestMapping("/api")
@@ -41,15 +32,6 @@ public class JobApplicationResource {
 
 	@Inject
 	private MailService mailService;
-
-	private MappingJackson2HttpMessageConverter jacksonMessageConverter = new MappingJackson2HttpMessageConverter ();
-
-	private PageableHandlerMethodArgumentResolver pageableArgumentResolver = new PageableHandlerMethodArgumentResolver();
-
-	private JobOfferResource jobOfferResource = new JobOfferResource();
-
-	private MockMvc restJobOfferMockMvc = MockMvcBuilders.standaloneSetup(jobOfferResource)
-			.setCustomArgumentResolvers(pageableArgumentResolver).setMessageConverters(jacksonMessageConverter).build();
 
 	/**
 	 * POST /Application -> Create a new jobOffer.
