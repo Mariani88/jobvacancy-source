@@ -55,11 +55,14 @@ public class MailService {
 
     @Async
     public void sendApplication(String applicantEmail, JobOffer offer, String link) {
-        this.sendEmail(offer.getOwner().getEmail(),
-            "[JobVacancy] New candidate",
-            "Hi," + applicantEmail + "applied for your offer:" + offer.getTitle() + "Link to CV: " + link,
-            false,
-            false);
+        Context context = new Context();
+        context.setVariable("linkOffer", "http://127.0.0.1:8080/#/jobOffer/" + offer.getId());
+        context.setVariable("link", link);
+        context.setVariable("mail", applicantEmail);
+        context.setVariable("offer", offer);        
+        String content = templateEngine.process("jobApplicationEmail", context);
+        this.sendEmail(offer.getOwner().getEmail() ,"[JobVacancy] New candidate", content,false,true);
+
     }
 
     @Async

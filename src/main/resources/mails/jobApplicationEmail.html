@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+		<p>
+			Hello you have an application at your offer from: <a th:text="${mail}"></a>
+		</p>
+		<p>
+			Applied for your offer: <a th:href="${linkOffer}"
+			th:text="${offer.title}"></a>
+		</p>
+		<p>
+			<a th:href="${link}">CV candidate link</a>
+		</p>
+	</body>
+</html>
