@@ -28,7 +28,8 @@
             <column name="location" type="varchar(255)"/>
             <column name="description" type="varchar(255)"/>
             <column name="owner_id" type="bigint"/>
-            <column name="postulations" type="bigint"/>  
+            <column name="postulations" type="bigint"/>   
+            <column name="creation_date" type="timestamp"/>   
         </createTable>
         
         <addForeignKeyConstraint baseColumnNames="owner_id"

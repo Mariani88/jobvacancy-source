@@ -23,23 +23,22 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
-
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
-
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -276,7 +275,21 @@ public class JobOfferResourceTest {
     }
     
     
-    
-    
-    
+    @Test
+    @Transactional
+    public void whenAOffersIsCreatedTheDateIsToday () throws IOException, Exception{
+    	
+        
+		Calendar calendar = new GregorianCalendar();
+		@SuppressWarnings("deprecation")
+		Date date = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
+
+		// Create the JobOffer
+		restJobOfferMockMvc.perform(post("/api/jobOffers").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(jobOffer))).andExpect(status().isCreated());
+
+		List<JobOffer> jobOffersRetorned = jobOfferRepository.findAll();
+        
+    	Assert.assertEquals(date, jobOffersRetorned.get(0).getDate());
+    }   
 }

@@ -23,6 +23,9 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -50,8 +53,10 @@ public class JobOfferResource {
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<JobOffer> createJobOffer(@Valid @RequestBody JobOffer jobOffer) throws URISyntaxException {
-        jobOffer.setPostulations( new Long (0) );
-    	log.debug("REST request to save JobOffer : {}", jobOffer);
+        
+    	setJobOffersAtributtes(jobOffer);
+		
+		log.debug("REST request to save JobOffer : {}", jobOffer);
         if (jobOffer.getId() != null) {
             return ResponseEntity.badRequest().header("Failure", "A new jobOffer cannot already have an ID").body(null);
         }
@@ -63,6 +68,14 @@ public class JobOfferResource {
                 .headers(HeaderUtil.createEntityCreationAlert("jobOffer", result.getId().toString()))
                 .body(result);
     }
+
+	private void setJobOffersAtributtes(JobOffer jobOffer) {
+		jobOffer.setPostulations( new Long (0) );
+        Calendar calendar = new GregorianCalendar();
+		@SuppressWarnings("deprecation")
+		Date date = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
+    	jobOffer.setDate(date);
+	}
 
     /**
      * PUT  /jobOffers -> Updates an existing jobOffer.

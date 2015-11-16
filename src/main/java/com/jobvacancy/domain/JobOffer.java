@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -38,6 +39,10 @@ public class JobOffer implements Serializable {
     @Column(name = "postulations")
     private Long postulations;
     
+    @Column(name = "creation_date")
+    private Date creationDate;
+    
+    
     @ManyToOne
     private User owner;
     
@@ -64,6 +69,14 @@ public class JobOffer implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
+    
+    public Date getDate() {
+		return this.creationDate;
+	}
+
+	public void setDate(Date date) {
+		this.creationDate = date;
+	}
 
     public String getLocation() {
         return location;
