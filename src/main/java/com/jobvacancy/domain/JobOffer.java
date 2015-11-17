@@ -42,6 +42,8 @@ public class JobOffer implements Serializable {
     @Column(name = "creation_date")
     private Date creationDate;
     
+    @Column(name = "active")
+    private Boolean active;
     
     @ManyToOne
     private User owner;
@@ -70,15 +72,25 @@ public class JobOffer implements Serializable {
         this.title = title;
     }
     
-    public Date getDate() {
-		return this.creationDate;
+ 
+
+    public Date getCreationDate() {
+		return creationDate;
 	}
 
-	public void setDate(Date date) {
-		this.creationDate = date;
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 
-    public String getLocation() {
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public String getLocation() {
         return location;
     }
 

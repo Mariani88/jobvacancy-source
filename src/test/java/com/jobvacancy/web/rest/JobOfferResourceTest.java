@@ -290,6 +290,22 @@ public class JobOfferResourceTest {
 
 		List<JobOffer> jobOffersRetorned = jobOfferRepository.findAll();
         
-    	Assert.assertEquals(date, jobOffersRetorned.get(0).getDate());
+    	Assert.assertEquals(date, jobOffersRetorned.get(0).getCreationDate());
     }   
+    
+    
+    @Test
+    @Transactional
+    public void whenAOffersIsCreatedActiveIsTrue () throws IOException, Exception{
+    	
+		// Create the JobOffer
+		restJobOfferMockMvc.perform(post("/api/jobOffers").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(jobOffer))).andExpect(status().isCreated());
+
+		List<JobOffer> jobOffersRetorned = jobOfferRepository.findAll();
+        
+    	Assert.assertTrue(jobOffersRetorned.get(0).getActive());
+    }   
+    
+    
 }

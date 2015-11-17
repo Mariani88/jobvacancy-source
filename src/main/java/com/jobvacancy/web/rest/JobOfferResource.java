@@ -74,7 +74,8 @@ public class JobOfferResource {
         Calendar calendar = new GregorianCalendar();
 		@SuppressWarnings("deprecation")
 		Date date = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
-    	jobOffer.setDate(date);
+    	jobOffer.setCreationDate(date);
+    	jobOffer.setActive(true);
 	}
 
     /**

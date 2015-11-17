@@ -30,6 +30,7 @@
             <column name="owner_id" type="bigint"/>
             <column name="postulations" type="bigint"/>   
             <column name="creation_date" type="timestamp"/>   
+            <column name="active" type="boolean"/>  
         </createTable>
         
         <addForeignKeyConstraint baseColumnNames="owner_id"
