@@ -2,6 +2,7 @@ package com.jobvacancy.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -40,6 +41,7 @@ public class JobOffer implements Serializable {
     private Long postulations;
     
     @Column(name = "creation_date")
+    @Type(type = "date")
     private Date creationDate;
     
     @Column(name = "active")

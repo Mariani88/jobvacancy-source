@@ -109,6 +109,7 @@ public class JobOfferResourceTest {
         jobOffer.setTitle(DEFAULT_TITLE);
         jobOffer.setLocation(DEFAULT_LOCATION);
         jobOffer.setDescription(DEFAULT_DESCRIPTION);
+        jobOffer.setActive(true);
     }
 
     public static class MockSecurityContext implements SecurityContext {
@@ -307,5 +308,27 @@ public class JobOfferResourceTest {
     	Assert.assertTrue(jobOffersRetorned.get(0).getActive());
     }   
     
+    
+    @Test
+	@Transactional
+	public void getAllActiveJobOffersMustNotReturnDesactiveOffers () throws Exception {
+
+    	jobOffer.setActive(false);
+    	this.jobOfferRepository.save(jobOffer);
+    	
+    	Assert.assertEquals(0, this.jobOfferRepository.findActive().size());
+    	
+    }
+    
+    @Test
+  	@Transactional
+  	public void getAllActiveJobOffersMustReturnActiveOffers () throws Exception {
+
+      	jobOffer.setActive(true);
+      	this.jobOfferRepository.save(jobOffer);
+      	
+      	Assert.assertEquals(1, this.jobOfferRepository.findActive().size());
+      	Assert.assertEquals (jobOffer, this.jobOfferRepository.findActive().get (0));
+      }
     
 }

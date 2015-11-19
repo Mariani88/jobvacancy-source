@@ -3,6 +3,7 @@ package com.jobvacancy.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.jobvacancy.domain.JobOffer;
 import com.jobvacancy.domain.User;
+import org.springframework.data.domain.PageImpl;
 import com.jobvacancy.repository.JobOfferRepository;
 import com.jobvacancy.repository.UserRepository;
 import com.jobvacancy.security.SecurityUtils;
@@ -76,6 +77,7 @@ public class JobOfferResource {
 		Date date = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
     	jobOffer.setCreationDate(date);
     	jobOffer.setActive(true);
+    	
 	}
 
     /**
@@ -238,7 +240,8 @@ public class JobOfferResource {
     @Timed
     public ResponseEntity<List<JobOffer>> getAllOffers(Pageable pageable)
             throws URISyntaxException {
-        Page<JobOffer> page = jobOfferRepository.findAll(pageable);
+        
+    	Page<JobOffer> page = new PageImpl<JobOffer>(jobOfferRepository.findActive());
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/offers");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -256,7 +259,4 @@ public class JobOfferResource {
         
     	return this.jobOfferRepository.count();
     }
-    
-    
-    
 }
