@@ -25,7 +25,7 @@ public class AnalizerDateJobOfferTest {
 		Assert.assertFalse(jobOfferOld.getActive());
 	}
 	
-	/*@Test
+	@Test
 	public void analizerActiveDateMustDoTrueActiveJobOfferWithDateMinorToMesOld() {
 
 		AnalizerDateJobOffer analizerDate = new AnalizerDateJobOffer();
@@ -37,7 +37,7 @@ public class AnalizerDateJobOfferTest {
 
 		Assert.assertTrue(jobOfferNew.getActive() );
 		
-	}*/
+	}
 	
 	
 	private JobOffer createJobOfferForTest ( Date date){
