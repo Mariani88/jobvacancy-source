@@ -20,13 +20,17 @@ public class AnalizerDateJobOffer {
 		this.todayDate = new Date(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE));
 	}
 
-	public void analize(JobOffer jobOffer) {
+	public boolean shouldDesactive(JobOffer jobOffer) {
 
 		long timeSinceCreation = this.todayDate.getTime() - jobOffer.getCreationDate().getTime();
-
+		boolean desactive = false;
+		
 		if (timeSinceCreation > this.monthInMilliseconds) {
 
 			jobOffer.setActive(false);
+			desactive = true;
 		}
+		
+		return desactive;
 	}
 }

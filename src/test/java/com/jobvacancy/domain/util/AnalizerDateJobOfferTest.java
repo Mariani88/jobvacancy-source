@@ -1,9 +1,6 @@
 package com.jobvacancy.domain.util;
 
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -20,9 +17,10 @@ public class AnalizerDateJobOfferTest {
 
 		JobOffer jobOfferOld = createJobOfferForTest(new Date(2015, 10, 17));
 
-		analizerDate.analize(jobOfferOld);
+		boolean desactive = analizerDate.shouldDesactive(jobOfferOld);
 		
 		Assert.assertFalse(jobOfferOld.getActive());
+		Assert.assertTrue(desactive);
 	}
 	
 	@Test
@@ -33,9 +31,10 @@ public class AnalizerDateJobOfferTest {
 		@SuppressWarnings("deprecation")
 		JobOffer jobOfferNew = createJobOfferForTest (new Date (2015,11,17));
 
-		analizerDate.analize(jobOfferNew);
+		boolean desactive = analizerDate.shouldDesactive(jobOfferNew);
 
 		Assert.assertTrue(jobOfferNew.getActive() );
+		Assert.assertFalse (desactive);
 		
 	}
 	
