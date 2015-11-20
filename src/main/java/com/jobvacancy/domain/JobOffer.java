@@ -44,7 +44,11 @@ public class JobOffer implements Serializable {
     @Type(type = "date")
     private Date creationDate;
     
-    @Column(name = "active")
+    @Column(name = "expiration_date")
+    @Type(type = "date")
+    private Date expirationDate;
+    
+	@Column(name = "active")
     private Boolean active;
     
     @ManyToOne
@@ -116,6 +120,16 @@ public class JobOffer implements Serializable {
         this.owner = user;
     }
 
+    
+    public Date getExpirationDate() {
+		return expirationDate;
+	}
+
+	public void setExpirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+    
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) {

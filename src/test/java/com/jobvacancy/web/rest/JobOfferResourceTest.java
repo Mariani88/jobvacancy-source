@@ -103,13 +103,15 @@ public class JobOfferResourceTest {
     }
 
 
-    @Before
+    @SuppressWarnings("deprecation")
+	@Before
     public void initTest() {
         jobOffer = new JobOffer();
         jobOffer.setTitle(DEFAULT_TITLE);
         jobOffer.setLocation(DEFAULT_LOCATION);
         jobOffer.setDescription(DEFAULT_DESCRIPTION);
         jobOffer.setActive(true);
+        jobOffer.setExpirationDate(new Date (2015, 12, 10));
     }
 
     public static class MockSecurityContext implements SecurityContext {
@@ -133,7 +135,8 @@ public class JobOfferResourceTest {
         }
     }
 
-    @Test
+    @SuppressWarnings("deprecation")
+	@Test
     @Transactional
     public void createJobOffer() throws Exception {
         int databaseSizeBeforeCreate = jobOfferRepository.findAll().size();
@@ -153,6 +156,7 @@ public class JobOfferResourceTest {
         assertThat(testJobOffer.getLocation()).isEqualTo(DEFAULT_LOCATION);
         assertThat(testJobOffer.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         Assert.assertEquals(new Long (0), testJobOffer.getPostulations());
+        Assert.assertEquals(new Date (2015, 12,10), testJobOffer.getExpirationDate());
     }
 
     @Test
