@@ -5,9 +5,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.jobvacancy.domain.JobOffer;
 import com.jobvacancy.repository.JobOfferRepository;
 
+@Component
+@Transactional
 public class ScannerJobOfferDate {
 
 	@Inject

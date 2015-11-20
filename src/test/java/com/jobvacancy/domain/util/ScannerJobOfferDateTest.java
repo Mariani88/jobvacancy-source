@@ -4,14 +4,29 @@ import java.util.Date;
 import javax.inject.Inject;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.IntegrationTest;
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.jobvacancy.Application;
 import com.jobvacancy.domain.JobOffer;
 import com.jobvacancy.repository.JobOfferRepository;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = Application.class)
+@WebAppConfiguration
+@IntegrationTest
+@Transactional
 public class ScannerJobOfferDateTest {
 
-	/*@Inject
+	@Inject
     private JobOfferRepository jobOfferRepository;
+	
+	@Inject
+	private ScannerJobOfferDate scanner;
 	
 	@SuppressWarnings("deprecation")
 	@Test
@@ -24,7 +39,6 @@ public class ScannerJobOfferDateTest {
 		this.jobOfferRepository.save(jobOfferNew);
 		this.jobOfferRepository.save(jobOfferOld);
 		
-		ScannerJobOfferDate scanner = new ScannerJobOfferDate ();
 		scanner.scanJobOffers ();
 		
 		JobOffer jobOffer = this.jobOfferRepository.findOne( new Long (1) );
@@ -41,8 +55,9 @@ public class ScannerJobOfferDateTest {
 		
 		jobOffer.setId(id);
 		jobOffer.setCreationDate(date );
+		jobOffer.setTitle("fer");
 		jobOffer.setActive(true);
 		
 		return jobOffer;
-	}*/
+	}
 }
