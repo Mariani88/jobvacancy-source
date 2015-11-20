@@ -48,6 +48,14 @@ public class ScannerJobOfferDateTest {
 		Assert.assertFalse( jobOffer2.getActive());
 	}
 	
+	@Test
+	@Transactional
+	public void scanCreationDateMustNothingIfDatabaseIsEmpty (){
+		
+		scanner.scanJobOffers ();
+		
+		Assert.assertEquals( 0 , this.jobOfferRepository.findAll().size());
+	}
 	
 	private JobOffer createJobOfferForTest (Date date, Long id){
 		
@@ -55,7 +63,7 @@ public class ScannerJobOfferDateTest {
 		
 		jobOffer.setId(id);
 		jobOffer.setCreationDate(date );
-		jobOffer.setTitle("fer");
+		jobOffer.setTitle("title");
 		jobOffer.setActive(true);
 		
 		return jobOffer;
