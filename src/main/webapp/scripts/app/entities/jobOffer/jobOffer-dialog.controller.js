@@ -4,14 +4,15 @@ angular.module('jobvacancyApp').controller('JobOfferDialogController',
     ['$scope', '$stateParams', '$modalInstance', 'entity', 'JobOffer', 'User','isACopy',
         function($scope, $stateParams, $modalInstance, entity, JobOffer, User, isACopy) {
 
+	$scope.today =new Date().toISOString();
         $scope.jobOffer = entity;
         $scope.users = User.query();
         $scope.load = function(id) {
             JobOffer.get({id : id}, function(result) {
                 $scope.jobOffer = result;
+                
             });
         };
-
         var onSaveFinished = function (result) {
             $scope.$emit('jobvacancyApp:jobOfferUpdate', result);
             $modalInstance.close(result);

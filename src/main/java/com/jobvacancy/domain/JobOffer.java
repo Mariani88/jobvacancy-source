@@ -122,7 +122,8 @@ public class JobOffer implements Serializable {
 
     
     public Date getExpirationDate() {
-		return expirationDate;
+    	//java.sql.Date date = new java.sql.Date(this.expirationDate.getTime());
+    	return this.expirationDate;
 	}
 
 	public void setExpirationDate(Date expirationDate) {

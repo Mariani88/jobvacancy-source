@@ -45,6 +45,7 @@
                     <th>Location</th>
                     <th>Description</th>
 		    <th>Total postulations</th>
+		    <th>Expiration date (YYYY-MM-DD)</th>
                     <th></th>
                 </tr>
             </thead>
@@ -55,6 +56,7 @@
                     <td>{{jobOffer.location}}</td>
                     <td>{{jobOffer.description}}</td>
 		    <td>{{jobOffer.postulations}}</td>
+		    <td>{{jobOffer.expirationDate}}</td>
                     <td>
                         <button type="submit"
                                 ui-sref="jobOffer.detail({id:jobOffer.id})"
