@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.stereotype.Component;
 
 import com.jobvacancy.domain.User;
-import com.jobvacancy.repository.UserRepository;
+//import com.jobvacancy.repository.UserRepository;
 
 /**
  * Returns a 401 error code (Unauthorized) to the client, when Ajax authentication fails.
@@ -23,8 +23,8 @@ public class AjaxAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
 	@Inject
 	private UserLoggedHolder holder;
 	
-	@Inject
-	private UserRepository userRepository;
+	/*@Inject
+	private UserRepository userRepository;*/
 	
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
