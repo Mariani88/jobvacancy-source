@@ -42,7 +42,6 @@
            <label for="field_date">Date expires</label>
             <input type="date" class="form-control" name="expirationDate"  id="field_date"  ng-required="false" min="{{today}}" 
                     ng-model="jobOffer.expirationDate"
-                    ng-value="jobOffer.expirationDate"
 		    ng-pattern="/^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/"
                     >
              <div>
@@ -50,10 +49,6 @@
                    Start Date should not be less than current date. Please using YYYY-MM-DD. 
 		   If you use Chrome Please type DD/MM/AAAA.
 		</p>
-		 <p class="help-block" ng-show="editForm.expirationDate.$error.expirationDate">
-                   Your date is invalid.  Please try using YYYY-MM-DD format. 
-		   If you use Chrome Please type DD/MM/AAAA.
-                 </p>
 		<p class="help-block" ng-show="editForm.expirationDate.$error.pattern">
                    Your date is invalid.  Please try using YYYY-MM-DD format. 
 		   If you use Chrome Please type DD/MM/AAAA.
